@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Realmc mods klasörü nasıl oluşturulur</title>
+  <link rel="stylesheet" type="text/css" href="blog/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Mods klasörü oluşturma</h1>
+    </header>
+    <main>
+      <p>Evet arkadaşlar mods klasörünü oluşturmak için kısa bir anlatm yapacagım.
+
+
+İlk başta windows + r yapıyoruz ve karşımıza çalıştır çıkacak
+        
+      </p>
+     
+      <img src ="https://cdn.discordapp.com/attachments/1125859183619756052/1125859203542687856/image.png">
+<p> Ardından oraya %appdata% yazıyoruz.</p>
+      <img src="https://cdn.discordapp.com/attachments/1125859183619756052/1125860983047462962/image.png">
+      <p>Ardından bir klasör penceresi açılıyor</p>
+      <img src="https://cdn.discordapp.com/attachments/1125859183619756052/1125861736684195901/image.png">
+      <p>Buradan realMC klasörüne 2 kere tıklayıp açıyoruz </p>
+      <img src="https://cdn.discordapp.com/attachments/1125859183619756052/1125862246761910352/image.png">
+      <p>Ardından yeni diyoruz ve klasör ü seçioruz</p>
+      <tr>Ve oluşturdugumuz dosya ismini mods adını veriyoruz</tr>
+      <img src="https://cdn.discordapp.com/attachments/1125859183619756052/1125862381533274243/image.png">
+      <p>Ardından istediğiniz modu yükleyip oynayabilirsiniz iyi günler </p>
+      <div class="statistics">
+        <h2>Site Ziyaretçi Sayısı</h2>
+        <p id="visitorCount">0</p>
+      </div>
+
+      <div class="emojis">
+        <h2>Emojiler ve Tıklama Sayıları</h2>
+        <div class="emoji-container">
+          <div class="emoji" onclick="rate(1)">&#128077; <span id="clickCount1">0</span></div>
+          <div class="emoji" onclick="rate(2)">&#128078; <span id="clickCount2">0</span></div>
+          <div class="emoji" onclick="rate(3)">&#128079; <span id="clickCount3">0</span></div>
+          <div class="emoji" onclick="rate(4)">&#128076; <span id="clickCount4">0</span></div>
+          <div class="emoji" onclick="rate(5)">&#128075; <span id="clickCount5">0</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+  <script>
+    let visitorCount = Math.floor(Math.random() * 75);
+    let clickCounts = {
+      1: Math.floor(Math.random() * 11),
+      2: Math.floor(Math.random() * 11),
+      3: Math.floor(Math.random() * 11),
+      4: Math.floor(Math.random() * 11),
+      5: Math.floor(Math.random() * 11)
+    };
+    let clickedEmojis = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateVisitorCount();
+      updateClickCounts();
+      loadMemory();
+
+      // Socket.IO bağlantısı kurma
+      const socket = io();
+
+      // Sunucudan gelen güncellemeleri dinleme
+      socket.on('visitorCount', (count) => {
+        visitorCount = count;
+        updateVisitorCount();
+      });
+
+      socket.on('clickCounts', (counts) => {
+        clickCounts = counts;
+        updateClickCounts();
+      });
+
+      socket.on('clickedEmojis', (emojis) => {
+        clickedEmojis = emojis;
+      });
+    });
+
+    function updateVisitorCount() {
+      document.getElementById("visitorCount").textContent = visitorCount.toString();
+    }
+
+    function updateClickCounts() {
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById("clickCount" + i).textContent = clickCounts[i].toString();
+      }
+    }
+
+    function rate(score) {
+      if (!clickedEmojis.includes(score)) {
+        clickedEmojis.push(score);
+        clickCounts[score]++;
+        updateClickCounts();
+        console.log("Emoji " + score + " tıklandı. Tıklama Sayısı: " + clickCounts[score]);
+
+        // Sunucuya güncellemeleri gönderme
+        const socket = io();
+        socket.emit('rate', { clickCounts, clickedEmojis });
+      }
+    }
+
+    function loadMemory() {
+      // Hafızayı yükleme işlemleri burada gerçekleştirilebilir
+      // Örneğin, hafızayı bir JSON dosyasından okuyarak verileri güncelleyebilirsiniz
+      // Bu örnekte, rastgele değerler kullanıldığı için hafızayı yükleme işlemi yapılmamıştır
+    }
+  </script>
+</body>
+</html>

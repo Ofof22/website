@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Discord hesap paylaşma botu</title>
+  <link rel="stylesheet" type="text/css" href="/blog/style.css">
+</head>
+  <style>
+.button {
+display: inline-block;
+padding: 10px 20px;
+text-align: center;
+text-decoration: none;
+color: #ffffff;
+background-color: #4ed0ac;
+border-radius: 6px;
+outline: none;
+}
+</style>
+<body>
+  <div class="container">
+    <header>
+      <h1>Altyapı nasıl oluştu nasıl kullanılmaya başladı özet</h1>
+    </header>
+    <main>
+      <p>Bu botu ilk başlarda sizlere disney+ hesabı dagıtmak için yaratmıştım ama gerçi disney + güvenliği arttırdığı için çok birşey yapamadım. Aslında bir apiye bağlı çalışıyordu ilk başlarda size öyle tatmi etmek istedim daha sonra api hem yeni hemde güvenliği düşük oldugundan silip size database sakladım </p>
+      <header>
+      <h1>Bot nasıl çalışıyor</h1>
+    </header>
+      <p>Botun çalışma mantığı şöyle hergün 1 kere !hesap-al komutu ilen hesap veren bir bot idi örneklerini şuan gösteremiyecegim asli bilgisayarda olamadıgım için botun main dosyasına bakarsanız belirli log kanal tutan yerleri var ilk önce oraları doldurunuz ve bot kullanılmaya hazır</p>
+
+      
+      <tr>Peki hesaplarınızı bota nasıl yüklersiniz onu açıklıyacagım 2 farklı yolu var 1. botun dosyalarından hesaplar.txt dosyası var oraya hesapları atarak yada gizli bir sohbete !ekle yazarakdan oradaki sorulara cevap verip ekleyebilirsiniz size 1. yöntemi öneririm daha cazip daha kolay</tr>
+<header>Bot altyapısı</header>
+      <a class="button" href="https://replit.com/@FATIHYALCIN1/wattpad-1">Altyapi</a>
+      
+      <!-- Site ziyaretçi sayısı -->
+      <div class="statistics">
+        <h2>Site Ziyaretçi Sayısı</h2>
+        <p id="visitorCount">0</p>
+      </div>
+
+      <!-- Emojiler ve tıklama sayıları -->
+      <div class="emojis">
+        <h2>Emojiler ve Tıklama Sayıları</h2>
+        <div class="emoji-container">
+          <div class="emoji" onclick="rate(1)">&#128077; <span id="clickCount1">0</span></div>
+          <div class="emoji" onclick="rate(2)">&#128078; <span id="clickCount2">0</span></div>
+          <div class="emoji" onclick="rate(3)">&#128079; <span id="clickCount3">0</span></div>
+          <div class="emoji" onclick="rate(4)">&#128076; <span id="clickCount4">0</span></div>
+          <div class="emoji" onclick="rate(5)">&#128075; <span id="clickCount5">0</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+  <script>
+    // Rastgele değerlerin oluşturulması
+    let visitorCount = Math.floor(Math.random() * 75);
+    let clickCounts = {
+      1: Math.floor(Math.random() * 11),
+      2: Math.floor(Math.random() * 11),
+      3: Math.floor(Math.random() * 11),
+      4: Math.floor(Math.random() * 11),
+      5: Math.floor(Math.random() * 11)
+    };
+    let clickedEmojis = [];
+
+    // Sayfa yüklenirken çalışacak işlemler
+    document.addEventListener("DOMContentLoaded", () => {
+      updateVisitorCount();
+      updateClickCounts();
+      loadMemory();
+
+      // Socket.IO bağlantısı kurma
+      const socket = io();
+
+      // Sunucudan gelen güncellemeleri dinleme
+      socket.on('visitorCount', (count) => {
+        visitorCount = count;
+        updateVisitorCount();
+      });
+
+      socket.on('clickCounts', (counts) => {
+        clickCounts = counts;
+        updateClickCounts();
+      });
+
+      socket.on('clickedEmojis', (emojis) => {
+        clickedEmojis = emojis;
+      });
+    });
+
+    // Site ziyaretçi sayısını güncelleme
+    function updateVisitorCount() {
+      document.getElementById("visitorCount").textContent = visitorCount.toString();
+    }
+
+    // Emojilere tıklama sayılarını güncelleme
+    function updateClickCounts() {
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById("clickCount" + i).textContent = clickCounts[i].toString();
+      }
+    }
+
+    // Emojilere tıklama işlemi
+    function rate(score) {
+      if (!clickedEmojis.includes(score)) {
+        clickedEmojis.push(score);
+        clickCounts[score]++;
+        updateClickCounts();
+        console.log("Emoji " + score + " tıklandı. Tıklama Sayısı: " + clickCounts[score]);
+
+        // Sunucuya güncellemeleri gönderme
+        const socket = io();
+        socket.emit('rate', { clickCounts, clickedEmojis });
+      }
+    }
+
+    // Hafızayı yükleme işlemi
+    function loadMemory() {
+      // Hafızayı yükleme işlemleri burada gerçekleştirilebilir
+      // Örneğin, hafızayı bir JSON dosyasından okuyarak verileri güncelleyebilirsiniz
+      // Bu örnekte, rastgele değerler kullanıldığı için hafızayı yükleme işlemi yapılmamıştır
+    }
+  </script>
+</body>
+</html>

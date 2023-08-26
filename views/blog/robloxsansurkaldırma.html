@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Roblox oyunlarınızda sansürü kaldırın! </title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+ <style>
+  /* Sağ tarafa ait stil */
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .container main {
+    width: 70%;
+  }
+
+  .container aside {
+    width: 25%;
+    background-color: #B956E5;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .container aside h2 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .container aside .profile-info p {
+    margin-bottom: 10px;
+  }
+
+  .container aside .profile-info strong {
+    font-weight: bold;
+  }
+
+  .profile-picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <main>
+      <header>
+        <h1>Roblox oyunlarınızda sansürü kaldırın</h1>
+      </header>
+      <img src= https://cdn.discordapp.com/attachments/1107311678053425275/1126224339428180009/Screenshot_20220621_162140_com.png>
+      
+      <p>Evet arkadaşlar bu sizin kendi oynunuzda sansürü kaldırma mümkün birşey ve benim kendi yazdıgım bir script kendisini
+      yalanlayanlar oldu ama gerçi çalışıyor Oyun halende aktif sadece hesabım 7 günlük ban riski ile karşı karşıya
+      ama bunu çözebiliriz.</p>
+      
+      <tr>Evet 7 tl ücretle bunu kullanabilirsiniz cidden oyun yetkilileri sizin
+        oynunuzu kontrol etmeye başlasa bulamaz cunku bunu dosyalarımızda sanki başka bir
+        lua scriptmiş gibi gösteriyoruz 10 tl ücretle bunuda yapabilioruz tabi size kalmış
+      </tr>
+      <header>
+      <h1> Nereden satın alacagız Ve bu bir yasal suç değilmi?</h1>
+        </header>
+      <p> Evet bu bir ne kadar roblox'da yasal suç olsa bile Çoğunuza yarayabilcek birşey
+        yukarıda yazdıgımız gibi özel bir script ile bu ban riskini kaldırabilioruz
+        Ve bu sizin oynunuza kat ve kat daha giriş sayılarını arttıcak ve robux kazanmanız
+        baya fazla olucak eger gruba baglamayıp bir oyun yaptıysanız 250 - 10 
+        arası robux lar alabiliyorsunuz eğer gruba bağlı ise durum biraz daha değişior
+        eğer grubunuza baglı oyun hem 100 kullanıcı hemde 10k+ visit aldıysa
+        5k - 30k arası robux alma şansınız oluyor :) </p>
+      <img src="https://cdn.discordapp.com/attachments/1107311678053425275/1126227816460071024/image.png">
+      <p>Satın almak için discord üzerinden bana ulaşmanız gerekmektedir ve ekran alıntısından size bağlı günlerce robux gelebilme imkanı var malum dolar artdı en dşük robux 98 tl oldu buda sizin işinize yarar die biliyorum :) </p>
+      <tr>Lakin dolandırıcı diorsanız sizin güveninize kalmış iyi günler diliyorum görüşmek üzere 👋</tr>
+
+      <div class="statistics">
+        <h2>Site Ziyaretçi Sayısı</h2>
+        <p id="visitorCount">0</p>
+      </div>
+
+      <div class="emojis">
+        <h2>Emojiler ve Tıklama Sayıları</h2>
+        <div class="emoji-container">
+          <div class="emoji" onclick="rate(1)">&#128077; <span id="clickCount1">0</span></div>
+          <div class="emoji" onclick="rate(2)">&#128078; <span id="clickCount2">0</span></div>
+          <div class="emoji" onclick="rate(3)">&#128079; <span id="clickCount3">0</span></div>
+          <div class="emoji" onclick="rate(4)">&#128076; <span id="clickCount4">0</span></div>
+          <div class="emoji" onclick="rate(5)">&#128075; <span id="clickCount5">0</span></div>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <h2>Ben Kimim?</h2>
+      <div class="profile-info">
+        <div class="profile-picture">
+  <img src="https://cdn.discordapp.com/attachments/1125859183619756052/1126071000753242142/skibidi-skibidi-toilet.gif" alt="Profil Fotoğrafı">
+</div>
+
+     <p><strong>İsmim:</strong> Berkay / Nombre: Berkay</p>
+<p><strong>Kaçıncı sınıfım:</strong> 10. sınıfım / Grado: Estoy en el grado 10</p>
+<p><strong>Ne zamandır HTML ve yazılım işleriyle uğraşıyorum:</strong> Toplam 5 yıldır yazılım ile uğraşıyorum / Desde cuándo estoy involucrado en HTML y desarrollo de software: Llevo 5 años trabajando con software</p>
+<p><strong>Nerede yaşıyorum:</strong> Tokat'ta yaşıyorum / Dónde vivo: Vivo en Tokat</p>
+<p><strong>Hangi okuldayım:</strong> Tokat Mesleki ve Teknik Anadolu Lisesi / Escuela en la que estoy: Soy estudiante de la Escuela Secundaria Técnica de Tokat</p>
+</div>
+</aside>
+</div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+  <script>
+    let visitorCount = Math.floor(Math.random() * 75);
+    let clickCounts = {
+      1: Math.floor(Math.random() * 11),
+      2: Math.floor(Math.random() * 11),
+      3: Math.floor(Math.random() * 11),
+      4: Math.floor(Math.random() * 11),
+      5: Math.floor(Math.random() * 11)
+    };
+    let clickedEmojis = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateVisitorCount();
+      updateClickCounts();
+      loadMemory();
+
+      // Socket.IO bağlantısı kurma
+      const socket = io();
+
+      // Sunucudan gelen güncellemeleri dinleme
+      socket.on('visitorCount', (count) => {
+        visitorCount = count;
+        updateVisitorCount();
+      });
+
+      socket.on('clickCounts', (counts) => {
+        clickCounts = counts;
+        updateClickCounts();
+      });
+
+      socket.on('clickedEmojis', (emojis) => {
+        clickedEmojis = emojis;
+      });
+    });
+
+    function updateVisitorCount() {
+      document.getElementById("visitorCount").textContent = visitorCount.toString();
+    }
+
+    function updateClickCounts() {
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById("clickCount" + i).textContent = clickCounts[i].toString();
+      }
+    }
+
+    function rate(score) {
+      if (!clickedEmojis.includes(score)) {
+        clickedEmojis.push(score);
+        clickCounts[score]++;
+        updateClickCounts();
+        console.log("Emoji " + score + " tıklandı. Tıklama Sayısı: " + clickCounts[score]);
+
+        // Sunucuya güncellemeleri gönderme
+        const socket = io();
+        socket.emit('rate', { clickCounts, clickedEmojis });
+      }
+    }
+
+    function loadMemory() {
+      // Hafızayı yükleme işlemleri burada gerçekleştirilebilir
+      // Örneğin, hafızayı bir JSON dosyasından okuyarak verileri güncelleyebilirsiniz
+      // Bu örnekte, rastgele değerler kullanıldığı için hafızayı yükleme işlemi yapılmamıştır
+    }
+  </script>
+</body>
+</html>

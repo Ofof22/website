@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arama Sonuçları</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Arama Sonuçları</h1>
+
+  <div id="search-results-container"></div>
+
+  <script>
+    // Arama sonuçlarını işleme fonksiyonu
+    function processSearchResults() {
+      // URL'den arama sorgusunu al
+      var searchParams = new URLSearchParams(window.location.search);
+      var query = searchParams.get('q');
+
+      // Arama sorgusunu işleme ve sonuçları gösterme
+      var searchResultsContainer = document.getElementById('search-results-container');
+      if (query) {
+        // Örnek olarak, sadece blog başlıklarını gösterelim
+        var blogTitles = document.getElementsByClassName('blog-item-title');
+        var matchingTitles = [];
+
+        for (var i = 0; i < blogTitles.length; i++) {
+          var title = blogTitles[i].textContent;
+          if (title.toLowerCase().includes(query.toLowerCase())) {
+            matchingTitles.push(title);
+          }
+        }
+
+        // Eşleşen başlıkları göster
+        if (matchingTitles.length > 0) {
+          var resultsHTML = '<h2>Başlıklarda eşleşme bulundu:</h2><ul>';
+          for (var j = 0; j < matchingTitles.length; j++) {
+            resultsHTML += '<li>' + matchingTitles[j] + '</li>';
+          }
+          resultsHTML += '</ul>';
+          searchResultsContainer.innerHTML = resultsHTML;
+        } else {
+          searchResultsContainer.innerHTML = '<p>Eşleşen başlık bulunamadı.</p>';
+        }
+      } else {
+        searchResultsContainer.innerHTML = '<p>Arama sorgusu bulunamadı.</p>';
+      }
+    }
+
+    // Arama sonuçlarını sayfa yüklendiğinde işle
+    window.addEventListener('DOMContentLoaded', processSearchResults);
+  </script>
+</body>
+
+</html>

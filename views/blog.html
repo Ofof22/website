@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Sayfaları</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .go-to-page-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0099ff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .go-to-page-button:hover {
+      background-color: #0077cc;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Blog Sayfaları</h1>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Arama yap..." oninput="searchBlog()">
+      <button class="search-button">Ara</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="blog-list">
+        <div class="blog-item">
+          <h2>Discord hesap paylaşma bot altyapısı</h2>
+          <img src="https://cdn.discordapp.com/attachments/1121525646439485481/1125104471354118174/image.png" alt="Blog Görseli 1">
+          <button onclick="goToPage('blog/altyapi.html')" class="go-to-page-button">Konuya git</button>
+        </div>
+        <div class="blog-item">
+          <h2>RealMC launcher mods klasörü ekleme</h2>
+          <img src="https://cdn.discordapp.com/attachments/1125859183619756052/1125865753049059399/Minecraft-Game-Changing-Mods-Feature.png" alt="Blog Görseli 2">
+          <button onclick="goToPage('blog/realmcmodsklasoru.html')" class="go-to-page-button">Konuya git</button>
+        </div>
+        <!-- Diğer bloglar buraya eklenecek -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function searchBlog() {
+      var searchInput = document.getElementById('search-input').value.toLowerCase();
+      var blogItems = document.getElementsByClassName('blog-item');
+
+      for (var i = 0; i < blogItems.length; i++) {
+        var blogTitle = blogItems[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+
+        if (blogTitle.includes(searchInput)) {
+          blogItems[i].style.display = 'block';
+        } else {
+          blogItems[i].style.display = 'none';
+        }
+      }
+    }
+
+    function goToPage(pageUrl) {
+      window.location.href = pageUrl;
+    }
+  </script>
+</body>
+
+</html>

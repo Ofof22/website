@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Paneli</title>
+  <style>
+    h1 {
+      text-align: center;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+  
+    label {
+      margin-bottom: 10px;
+    }
+  
+    textarea {
+      width: 300px;
+      height: 100px;
+      resize: vertical;
+    }
+  
+    button {
+      padding: 10px 20px;
+      background-color: #0099ff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    button:hover {
+      background-color: #0077cc;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Admin Paneli - Blog Oluşturma</h1>
+  <form id="blogForm">
+    <label for="description">Açıklama:</label>
+    <textarea id="description" name="description" rows="4" cols="50"></textarea>
+    <br>
+    <button type="submit">Blog Oluştur</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const blogForm = document.getElementById('blogForm');
+      blogForm.addEventListener('submit', createBlog);
+
+      function createBlog(event) {
+        event.preventDefault();
+
+        const description = document.getElementById('description').value;
+
+        const data = {
+          description: description
+        };
+
+        fetch('/admin/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => response.text())
+          .then(message => {
+            alert(message);
+            blogForm.reset();
+          })
+          .catch(error => console.error(error));
+      }
+    });
+  </script>
+</body>
+
+</html>
